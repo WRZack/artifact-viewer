@@ -3,7 +3,7 @@ import { DynamicArtifactViewer, Artifact } from '../src/index';
 import './App.css';
 import { mockArtifacts } from './mockData';
 
-type DemoType = 'basic' | 'agent-output' | 'documentation' | 'design-system' | 'report-generator' | 'code-review';
+type DemoType = 'basic' | 'agent-output' | 'documentation' | 'design-system' | 'report-generator' | 'code-review' | 'multi-format';
 
 const App = () => {
   const [currentDemo, setCurrentDemo] = useState<DemoType>('basic');
@@ -41,16 +41,23 @@ const App = () => {
       case 'code-review':
         return {
           artifacts: mockArtifacts.codeReview,
-          title: '👀 Code Review Tools',
+          title: '👁️ Code Review Tools',
           description:
             'Code review interface showing diffs, comments, suggestions, and multiple file formats in a single view.',
+        };
+      case 'multi-format':
+        return {
+          artifacts: mockArtifacts.multiFormat,
+          title: '📋 Multi-Format Showcase',
+          description:
+            'Comprehensive demonstration of PDF, Image, HTML, Markdown formats all together in one viewer.',
         };
       case 'basic':
       default:
         return {
           artifacts: mockArtifacts.basic,
-          title: '🌟 Basic Example',
-          description: 'Simple demonstration with all supported artifact types.',
+          title: '⭐ Basic Example',
+          description: 'Simple demonstration with all supported artifact types including PDF, Image, and standard formats.',
         };
     }
   };
@@ -72,7 +79,7 @@ const App = () => {
             className={`nav-btn ${currentDemo === 'basic' ? 'active' : ''}`}
             onClick={() => setCurrentDemo('basic')}
           >
-            🌟 Basic
+            ⭐ Basic
           </button>
           <button
             className={`nav-btn ${currentDemo === 'agent-output' ? 'active' : ''}`}
@@ -102,7 +109,13 @@ const App = () => {
             className={`nav-btn ${currentDemo === 'code-review' ? 'active' : ''}`}
             onClick={() => setCurrentDemo('code-review')}
           >
-            👀 Code Review
+            👁️ Code Review
+          </button>
+          <button
+            className={`nav-btn ${currentDemo === 'multi-format' ? 'active' : ''}`}
+            onClick={() => setCurrentDemo('multi-format')}
+          >
+            ���� Multi-Format
           </button>
         </div>
       </nav>
@@ -131,6 +144,7 @@ const App = () => {
         {currentDemo === 'design-system' && <DesignSystemInfo />}
         {currentDemo === 'report-generator' && <ReportGeneratorInfo />}
         {currentDemo === 'code-review' && <CodeReviewInfo />}
+        {currentDemo === 'multi-format' && <MultiFormatInfo />}
       </main>
 
       <footer className="demo-footer">
@@ -169,6 +183,14 @@ const BasicExampleInfo = () => (
         <h4>📊 JSON</h4>
         <p>Structured data with syntax highlighting</p>
       </div>
+      <div className="info-card">
+        <h4>📄 PDF</h4>
+        <p>PDF documents with page navigation</p>
+      </div>
+      <div className="info-card">
+        <h4>🖼️ Image</h4>
+        <p>Images with zoom and pan capabilities</p>
+      </div>
     </div>
   </section>
 );
@@ -206,7 +228,7 @@ const DocumentationInfo = () => (
     </p>
     <div className="use-case-list">
       <div className="use-case-item">
-        <h4>🗂️ Unified Access</h4>
+        <h4>📖 Unified Access</h4>
         <p>README, guides, API docs, examples all in one interface</p>
       </div>
       <div className="use-case-item">
@@ -230,7 +252,7 @@ const DesignSystemInfo = () => (
     </p>
     <div className="use-case-list">
       <div className="use-case-item">
-        <h4>🎯 Component Library</h4>
+        <h4>🖌️ Component Library</h4>
         <p>Interactive preview of design components with HTML rendering</p>
       </div>
       <div className="use-case-item">
@@ -271,7 +293,7 @@ const ReportGeneratorInfo = () => (
 
 const CodeReviewInfo = () => (
   <section className="demo-section">
-    <h3>👀 Code Review Interface</h3>
+    <h3>👁️ Code Review Interface</h3>
     <p>
       Streamline code reviews by displaying diffs, suggestions, multiple file versions, and review comments
       in an organized, easy-to-navigate interface.
@@ -288,6 +310,34 @@ const CodeReviewInfo = () => (
       <div className="use-case-item">
         <h4>✅ Context</h4>
         <p>Test results, linting output, and CI/CD logs in JSON format</p>
+      </div>
+    </div>
+  </section>
+);
+
+const MultiFormatInfo = () => (
+  <section className="demo-section">
+    <h3>📋 Multi-Format Showcase</h3>
+    <p>
+      This comprehensive showcase demonstrates all the supported file formats working together:
+      PDF documents, images, HTML components, Markdown documentation, and more.
+    </p>
+    <div className="use-case-list">
+      <div className="use-case-item">
+        <h4>📄 PDF Support</h4>
+        <p>View PDF documents with page navigation and full controls</p>
+      </div>
+      <div className="use-case-item">
+        <h4>🖼️ Image Gallery</h4>
+        <p>Images with zoom, pan, and rotation capabilities</p>
+      </div>
+      <div className="use-case-item">
+        <h4>🔄 Seamless Switching</h4>
+        <p>Switch between any format with instant rendering and proper UI</p>
+      </div>
+      <div className="use-case-item">
+        <h4>✨ Complete Integration</h4>
+        <p>All formats work together with a unified, intuitive interface</p>
       </div>
     </div>
   </section>
