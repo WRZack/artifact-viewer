@@ -1,0 +1,28 @@
+.artifact-preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.viewer-default {
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 6px;
+}
+
+.viewer-default p {
+  color: #6b7280;
+  margin: 0 0 16px 0;
+  font-weight: 500;
+}
+
+.viewer-default pre {
+  background: #1f2937;
+  color: #e5e7eb;
+  padding: 12px;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.5;
+}
