@@ -130,12 +130,6 @@ const App = () => {
           >
             📄 Viewers
           </button>
-          <button
-            className={`nav-btn ${currentDemo === 'viewers-demo' ? 'active' : ''}`}
-            onClick={() => setCurrentDemo('viewers-demo')}
-          >
-            📄 Viewers
-          </button>
         </div>
       </nav>
 
