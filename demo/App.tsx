@@ -1,313 +1,136 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DynamicArtifactViewer, Artifact } from '../src/index';
 import './App.css';
+import { mockArtifacts } from './mockData';
+
+type DemoType = 'basic' | 'agent-output' | 'documentation' | 'design-system' | 'report-generator' | 'code-review';
 
 const App = () => {
-  // Sample artifacts for demonstration
-  const sampleArtifacts: Artifact[] = [
-    {
-      id: 'html-1',
-      name: 'React Component',
-      type: 'html',
-      content: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-            .card { background: white; border-radius: 16px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 500px; text-align: center; }
-            h1 { color: #333; margin-bottom: 16px; font-size: 32px; }
-            p { color: #666; font-size: 16px; line-height: 1.6; margin-bottom: 24px; }
-            .button { display: inline-block; padding: 12px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600; transition: transform 0.2s; }
-            .button:hover { transform: scale(1.05); }
-            .features { margin-top: 32px; text-align: left; }
-            .feature { display: flex; align-items: center; margin: 12px 0; color: #666; }
-            .feature-icon { width: 24px; height: 24px; background: #667eea; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 12px; font-weight: bold; flex-shrink: 0; }
-          </style>
-        </head>
-        <body>
-          <div class="card">
-            <h1>✨ Welcome</h1>
-            <p>This is a sandboxed HTML preview rendered in an iframe. You can include any HTML, CSS, and JavaScript here!</p>
-            <button class="button">Get Started</button>
-            <div class="features">
-              <div class="feature">
-                <div class="feature-icon">✓</div>
-                <span>Fully isolated & safe</span>
-              </div>
-              <div class="feature">
-                <div class="feature-icon">✓</div>
-                <span>Interactive components</span>
-              </div>
-              <div class="feature">
-                <div class="feature-icon">✓</div>
-                <span>Custom styling</span>
-              </div>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    },
-    {
-      id: 'md-1',
-      name: 'README.md',
-      type: 'markdown',
-      content: `
-# Artifact Viewer Library
+  const [currentDemo, setCurrentDemo] = useState<DemoType>('basic');
 
-## Overview
+  const getDemoContent = (): { artifacts: Artifact[]; title: string; description: string } => {
+    switch (currentDemo) {
+      case 'agent-output':
+        return {
+          artifacts: mockArtifacts.agentOutput,
+          title: '🤖 AI Agent Output',
+          description:
+            'Displays mixed output from an AI agent including HTML components, markdown documentation, generated code, and analysis results.',
+        };
+      case 'documentation':
+        return {
+          artifacts: mockArtifacts.documentation,
+          title: '📚 Documentation Hub',
+          description:
+            'Complete project documentation with README, API docs, code examples, and configuration files all in one place.',
+        };
+      case 'design-system':
+        return {
+          artifacts: mockArtifacts.designSystem,
+          title: '🎨 Design System',
+          description:
+            'Design system documentation with interactive components, guidelines, code snippets, and visual examples.',
+        };
+      case 'report-generator':
+        return {
+          artifacts: mockArtifacts.reportGenerator,
+          title: '📊 Report Generator',
+          description:
+            'Multi-format reports combining HTML dashboards, markdown analysis, JSON data exports, and visual summaries.',
+        };
+      case 'code-review':
+        return {
+          artifacts: mockArtifacts.codeReview,
+          title: '👀 Code Review Tools',
+          description:
+            'Code review interface showing diffs, comments, suggestions, and multiple file formats in a single view.',
+        };
+      case 'basic':
+      default:
+        return {
+          artifacts: mockArtifacts.basic,
+          title: '🌟 Basic Example',
+          description: 'Simple demonstration with all supported artifact types.',
+        };
+    }
+  };
 
-**Artifact Viewer** is a powerful React + TypeScript library for displaying various types of artifacts in a unified, user-friendly interface.
-
-## Supported Formats
-
-### 📄 HTML
-Render sandboxed HTML with full CSS and JavaScript support.
-\`\`\`html
-<h1>Hello World</h1>
-<p>This is safe HTML content</p>
-\`\`\`
-
-### 📝 Markdown
-Beautiful GitHub-flavored Markdown rendering.
-\`\`\`markdown
-# Heading 1
-## Heading 2
-- List item 1
-- List item 2
-\`\`\`
-
-### 🎨 Code
-Syntax-highlighted code with multiple language support.
-\`\`\`typescript
-interface Props {
-  name: string;
-  age: number;
-}
-\`\`\`
-
-### 📊 JSON
-Formatted JSON viewing with syntax highlighting.
-\`\`\`json
-{
-  "name": "John",
-  "age": 30
-}
-\`\`\`
-
-### 📑 PDF & Word
-Native support for PDF and Word document previews.
-
-### 🖼️ Images
-Image viewing with zoom and pan capabilities.
-
-## Key Features
-
-- ✅ **Multi-format Support** - HTML, Markdown, PDF, Word, Code, Images, JSON
-- ✅ **Zero Dependencies** - Only requires React
-- ✅ **TypeScript** - Full type safety
-- ✅ **Responsive Design** - Works on all devices
-- ✅ **Customizable** - Style and extend easily
-- ✅ **Download Support** - Export artifacts
-- ✅ **Fullscreen Mode** - Immersive viewing experience
-
-## Getting Started
-
-1. Install the library
-2. Import the component
-3. Pass your artifact
-4. Enjoy!
-      `,
-    },
-    {
-      id: 'code-1',
-      name: 'example.tsx',
-      type: 'code',
-      language: 'typescript',
-      content: `import React from 'react';
-import { DynamicArtifactViewer, Artifact } from 'artifact-viewer';
-
-export default function App() {
-  const artifacts: Artifact[] = [
-    {
-      id: '1',
-      name: 'Component',
-      type: 'html',
-      content: '<h1>Hello</h1>',
-    },
-    {
-      id: '2',
-      name: 'Docs',
-      type: 'markdown',
-      content: '# Welcome to Artifact Viewer',
-    },
-  ];
-
-  return (
-    <div style={{ height: '600px' }}>
-      <DynamicArtifactViewer
-        artifacts={artifacts}
-        defaultArtifactId="1"
-        onArtifactChange={(artifact) => {
-          console.log('Switched to:', artifact.name);
-        }}
-      />
-    </div>
-  );
-}`,
-    },
-    {
-      id: 'json-1',
-      name: 'config.json',
-      type: 'json',
-      content: JSON.stringify(
-        {
-          name: 'artifact-viewer',
-          version: '0.1.0',
-          description: 'A React + TypeScript library for displaying agent artifacts',
-          features: [
-            'HTML rendering',
-            'Markdown support',
-            'PDF viewing',
-            'Code highlighting',
-            'Image zoom',
-            'Word document preview',
-          ],
-          dependencies: {
-            react: '^18.2.0',
-            'react-dom': '^18.2.0',
-            marked: '^11.1.1',
-            'highlight.js': '^11.9.0',
-            'pdfjs-dist': '^4.0.379',
-          },
-        },
-        null,
-        2
-      ),
-    },
-  ];
+  const { artifacts, title, description } = getDemoContent();
 
   return (
     <div className="demo-app">
       <header className="demo-header">
         <div className="header-content">
-          <h1>🎨 Artifact Viewer Demo</h1>
-          <p>A powerful React + TypeScript library for displaying artifacts</p>
+          <h1>🎨 Artifact Viewer - Use Cases</h1>
+          <p>Explore various real-world scenarios and integrations</p>
         </div>
       </header>
 
+      <nav className="demo-nav">
+        <div className="nav-container">
+          <button
+            className={`nav-btn ${currentDemo === 'basic' ? 'active' : ''}`}
+            onClick={() => setCurrentDemo('basic')}
+          >
+            🌟 Basic
+          </button>
+          <button
+            className={`nav-btn ${currentDemo === 'agent-output' ? 'active' : ''}`}
+            onClick={() => setCurrentDemo('agent-output')}
+          >
+            🤖 AI Agent
+          </button>
+          <button
+            className={`nav-btn ${currentDemo === 'documentation' ? 'active' : ''}`}
+            onClick={() => setCurrentDemo('documentation')}
+          >
+            📚 Docs
+          </button>
+          <button
+            className={`nav-btn ${currentDemo === 'design-system' ? 'active' : ''}`}
+            onClick={() => setCurrentDemo('design-system')}
+          >
+            🎨 Design
+          </button>
+          <button
+            className={`nav-btn ${currentDemo === 'report-generator' ? 'active' : ''}`}
+            onClick={() => setCurrentDemo('report-generator')}
+          >
+            📊 Reports
+          </button>
+          <button
+            className={`nav-btn ${currentDemo === 'code-review' ? 'active' : ''}`}
+            onClick={() => setCurrentDemo('code-review')}
+          >
+            👀 Code Review
+          </button>
+        </div>
+      </nav>
+
       <main className="demo-main">
-        <section className="demo-section">
-          <h2>Dynamic Multi-Artifact Viewer</h2>
-          <p>
-            Click on the tabs below to switch between different artifact types. The viewer
-            automatically detects and renders the appropriate component based on the artifact
-            type.
-          </p>
+        <section className="demo-intro">
+          <h2>{title}</h2>
+          <p>{description}</p>
+        </section>
+
+        <section className="demo-viewer-section">
           <div className="viewer-container">
             <DynamicArtifactViewer
-              artifacts={sampleArtifacts}
-              defaultArtifactId="html-1"
+              artifacts={artifacts}
+              defaultArtifactId={artifacts[0]?.id}
               onArtifactChange={(artifact) => {
-                console.log('Current artifact:', artifact.name, artifact.type);
+                console.log('Viewing:', artifact.name, `(${artifact.type})`);
               }}
             />
           </div>
         </section>
 
-        <section className="demo-section info-section">
-          <h2>📚 Supported Formats</h2>
-          <div className="formats-grid">
-            <div className="format-card">
-              <div className="format-icon">🌐</div>
-              <h3>HTML</h3>
-              <p>Sandboxed iframe rendering with full HTML/CSS/JS support</p>
-            </div>
-            <div className="format-card">
-              <div className="format-icon">📝</div>
-              <h3>Markdown</h3>
-              <p>GitHub-flavored Markdown with syntax highlighting</p>
-            </div>
-            <div className="format-card">
-              <div className="format-icon">💻</div>
-              <h3>Code</h3>
-              <p>Multiple language support with syntax highlighting</p>
-            </div>
-            <div className="format-card">
-              <div className="format-icon">📄</div>
-              <h3>PDF</h3>
-              <p>PDF viewing with page navigation</p>
-            </div>
-            <div className="format-card">
-              <div className="format-icon">📋</div>
-              <h3>Word</h3>
-              <p>Word/DOCX document preview via Office Online</p>
-            </div>
-            <div className="format-card">
-              <div className="format-icon">🖼️</div>
-              <h3>Image</h3>
-              <p>Image viewing with zoom and pan capabilities</p>
-            </div>
-            <div className="format-card">
-              <div className="format-icon">📊</div>
-              <h3>JSON</h3>
-              <p>Formatted JSON with syntax highlighting</p>
-            </div>
-            <div className="format-card">
-              <div className="format-icon">🎁</div>
-              <h3>Custom</h3>
-              <p>Extensible design for custom artifact types</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="demo-section">
-          <h2>✨ Key Features</h2>
-          <ul className="features-list">
-            <li>✅ <strong>Dynamic Type Detection</strong> - Automatically renders based on artifact type</li>
-            <li>✅ <strong>Tab Navigation</strong> - Switch between multiple artifacts easily</li>
-            <li>✅ <strong>Fullscreen Mode</strong> - Immersive viewing experience</li>
-            <li>✅ <strong>Download Support</strong> - Export any artifact</li>
-            <li>✅ <strong>Source Toggle</strong> - View code in source or formatted modes</li>
-            <li>✅ <strong>Responsive Design</strong> - Works on desktop, tablet, and mobile</li>
-            <li>✅ <strong>TypeScript</strong> - Full type safety and IDE support</li>
-            <li>✅ <strong>Zero Dependencies</strong> - Only requires React</li>
-          </ul>
-        </section>
-
-        <section className="demo-section code-section">
-          <h2>📖 Usage Example</h2>
-          <pre className="code-block">{`import { DynamicArtifactViewer, Artifact } from 'artifact-viewer';
-
-const artifacts: Artifact[] = [
-  {
-    id: '1',
-    name: 'My Component',
-    type: 'html',
-    content: '<h1>Hello</h1>',
-  },
-  {
-    id: '2',
-    name: 'Documentation',
-    type: 'markdown',
-    content: '# Welcome',
-  },
-];
-
-export default function App() {
-  return (
-    <DynamicArtifactViewer
-      artifacts={artifacts}
-      defaultArtifactId="1"
-      onArtifactChange={(artifact) => {
-        console.log('Switched to:', artifact.name);
-      }}
-    />
-  );
-}`}</pre>
-        </section>
+        {currentDemo === 'basic' && <BasicExampleInfo />}
+        {currentDemo === 'agent-output' && <AgentOutputInfo />}
+        {currentDemo === 'documentation' && <DocumentationInfo />}
+        {currentDemo === 'design-system' && <DesignSystemInfo />}
+        {currentDemo === 'report-generator' && <ReportGeneratorInfo />}
+        {currentDemo === 'code-review' && <CodeReviewInfo />}
       </main>
 
       <footer className="demo-footer">
@@ -321,5 +144,153 @@ export default function App() {
     </div>
   );
 };
+
+const BasicExampleInfo = () => (
+  <section className="demo-section">
+    <h3>📝 Overview</h3>
+    <p>
+      This basic example showcases all supported artifact types in a single viewer. Each artifact type is
+      automatically detected and rendered with the appropriate component.
+    </p>
+    <div className="info-grid">
+      <div className="info-card">
+        <h4>🌐 HTML</h4>
+        <p>Interactive web components rendered in a sandboxed iframe</p>
+      </div>
+      <div className="info-card">
+        <h4>📝 Markdown</h4>
+        <p>Beautiful GitHub-flavored markdown with full formatting</p>
+      </div>
+      <div className="info-card">
+        <h4>💻 Code</h4>
+        <p>Syntax-highlighted code with multiple language support</p>
+      </div>
+      <div className="info-card">
+        <h4>📊 JSON</h4>
+        <p>Structured data with syntax highlighting</p>
+      </div>
+    </div>
+  </section>
+);
+
+const AgentOutputInfo = () => (
+  <section className="demo-section">
+    <h3>🤖 AI Agent Integration</h3>
+    <p>
+      Perfect for displaying AI-generated content in multiple formats. An agent can produce HTML UI components,
+      markdown explanations, code implementations, and JSON-formatted analysis—all displayed seamlessly.
+    </p>
+    <div className="use-case-list">
+      <div className="use-case-item">
+        <h4>✨ Multi-Modal Output</h4>
+        <p>Agents generate UI (HTML) + explanations (MD) + code + data (JSON) together</p>
+      </div>
+      <div className="use-case-item">
+        <h4>🔄 Sequential Processing</h4>
+        <p>Each agent step produces different artifact types for progressive refinement</p>
+      </div>
+      <div className="use-case-item">
+        <h4>📦 Self-Contained</h4>
+        <p>All outputs packaged together with automatic format detection</p>
+      </div>
+    </div>
+  </section>
+);
+
+const DocumentationInfo = () => (
+  <section className="demo-section">
+    <h3>📚 Documentation Hub</h3>
+    <p>
+      Centralize all project documentation. Users can easily navigate between README files, API documentation,
+      code examples, and configuration files without switching tools.
+    </p>
+    <div className="use-case-list">
+      <div className="use-case-item">
+        <h4>🗂️ Unified Access</h4>
+        <p>README, guides, API docs, examples all in one interface</p>
+      </div>
+      <div className="use-case-item">
+        <h4>🔗 Cross-References</h4>
+        <p>Easy navigation between related documentation sections</p>
+      </div>
+      <div className="use-case-item">
+        <h4>💡 Code Examples</h4>
+        <p>Integrated code snippets with syntax highlighting</p>
+      </div>
+    </div>
+  </section>
+);
+
+const DesignSystemInfo = () => (
+  <section className="demo-section">
+    <h3>🎨 Design System Documentation</h3>
+    <p>
+      Display design components, guidelines, code snippets, and visual examples. Designers and developers can
+      reference specifications, component implementations, and usage patterns in one place.
+    </p>
+    <div className="use-case-list">
+      <div className="use-case-item">
+        <h4>🎯 Component Library</h4>
+        <p>Interactive preview of design components with HTML rendering</p>
+      </div>
+      <div className="use-case-item">
+        <h4>📋 Guidelines</h4>
+        <p>Design guidelines, color palettes, and typography specs in markdown</p>
+      </div>
+      <div className="use-case-item">
+        <h4>💻 Implementation</h4>
+        <p>React, Vue, Angular code examples with syntax highlighting</p>
+      </div>
+    </div>
+  </section>
+);
+
+const ReportGeneratorInfo = () => (
+  <section className="demo-section">
+    <h3>📊 Report Generation</h3>
+    <p>
+      Create comprehensive reports combining visualizations, analysis, and data exports. Perfect for business
+      intelligence, analytics dashboards, and automated reporting systems.
+    </p>
+    <div className="use-case-list">
+      <div className="use-case-item">
+        <h4>📈 Dashboards</h4>
+        <p>Interactive HTML dashboards with charts and metrics</p>
+      </div>
+      <div className="use-case-item">
+        <h4>📝 Analysis</h4>
+        <p>Written analysis and insights in formatted markdown</p>
+      </div>
+      <div className="use-case-item">
+        <h4>💾 Data Export</h4>
+        <p>Raw data in JSON format for further processing</p>
+      </div>
+    </div>
+  </section>
+);
+
+const CodeReviewInfo = () => (
+  <section className="demo-section">
+    <h3>👀 Code Review Interface</h3>
+    <p>
+      Streamline code reviews by displaying diffs, suggestions, multiple file versions, and review comments
+      in an organized, easy-to-navigate interface.
+    </p>
+    <div className="use-case-list">
+      <div className="use-case-item">
+        <h4>📄 Multiple Files</h4>
+        <p>Review multiple files side-by-side with tab navigation</p>
+      </div>
+      <div className="use-case-item">
+        <h4>💬 Annotations</h4>
+        <p>Comments and suggestions stored as markdown artifacts</p>
+      </div>
+      <div className="use-case-item">
+        <h4>✅ Context</h4>
+        <p>Test results, linting output, and CI/CD logs in JSON format</p>
+      </div>
+    </div>
+  </section>
+);
 
 export default App;
