@@ -31,12 +31,12 @@ export const ArtifactPreview: React.FC<ArtifactPreviewProps> = ({
       case 'markdown':
         return <MarkdownViewer content={artifact.content as string} artifact={artifact} />;
       case 'pdf':
-        return <PdfViewer content={artifact.content as ArrayBuffer} artifact={artifact} />;
+        return <PdfViewer content={artifact.content as ArrayBuffer} url={artifact.url} artifact={artifact} />;
       case 'docx':
       case 'word':
-        return <WordViewer content={artifact.content as ArrayBuffer} artifact={artifact} />;
+        return <WordViewer content={artifact.content as ArrayBuffer} url={artifact.url} artifact={artifact} />;
       case 'image':
-        return <ImageViewer content={artifact.content as string} artifact={artifact} />;
+        return <ImageViewer content={artifact.content as string} url={artifact.url} artifact={artifact} />;
       case 'code':
         return (
           <CodeViewer

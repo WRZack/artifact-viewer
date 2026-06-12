@@ -852,4 +852,47 @@ if (!email || !password) {
       ),
     },
   ] as Artifact[],
+
+  // Demo category for Word, PDF, and Image viewers
+  viewersDemo: [
+    // Word Example - Using provided docx file
+    {
+      id: 'word-demo',
+      name: '公积金裁定书样本北京市顺义区人民法院.docx',
+      type: 'word' as const,
+      url: '/公积金裁定书样本北京市顺义区人民法院-修改样例1.docx',
+    },
+    // PDF Example - Using provided pdf file
+    {
+      id: 'pdf-demo',
+      name: '公积金裁定书样本北京市顺义区人民法院.pdf',
+      type: 'pdf' as const,
+      url: '/公积金裁定书样本北京市顺义区人民法院-修改样例1.pdf',
+    },
+    // Image Examples - Various image formats
+    {
+      id: 'image-svg',
+      name: 'Logo.svg',
+      type: 'image' as const,
+      content: 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cdefs%3E%3ClinearGradient id=%22grad1%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%22100%25%22%3E%3Cstop offset=%220%25%22 style=%22stop-color:%23667eea%22/%3E%3Cstop offset=%22100%25%22 style=%22stop-color:%23764ba2%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx=%22100%22 cy=%22100%22 r=%2280%22 fill=%22url(%23grad1)%22/%3E%3Ctext x=%22100%22 y=%22110%22 font-size=%2236%22 fill=%22white%22 text-anchor=%22middle%22 font-weight=%22bold%22%3ELogo%3C/text%3E%3C/svg%3E',
+    },
+    {
+      id: 'image-landscape',
+      name: 'Landscape.png',
+      type: 'image' as const,
+      content: 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 400%22%3E%3Cdefs%3E%3ClinearGradient id=%22sky%22 x1=%220%25%22 y1=%220%25%22 x2=%220%25%22 y2=%22100%25%22%3E%3Cstop offset=%220%25%22 style=%22stop-color:%2387CEEB%22/%3E%3Cstop offset=%22100%25%22 style=%22stop-color:%23E0F7FA%22/%3E%3C/linearGradient%3E%3ClinearGradient id=%22ground%22 x1=%220%25%22 y1=%220%25%22 x2=%220%25%22 y2=%22100%25%22%3E%3Cstop offset=%220%25%22 style=%22stop-color:%234CAF50%22/%3E%3Cstop offset=%22100%25%22 style=%22stop-color:%232E7D32%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%22800%22 height=%22400%22 fill=%22url(%23sky)%22/%3E%3Crect y=%22300%22 width=%22800%22 height=%22100%22 fill=%22url(%23ground)%22/%3E%3Ccircle cx=%22600%22 cy=%2280%22 r=%2240%22 fill=%22%23FFD700%22/%3E%3Cpath d=%22M0 300 Q200 250 400 300 T800 300%22 fill=%22%2381C784%22/%3E%3Cpath d=%22M100 300 L150 200 L200 300%22 fill=%22%235D4037%22/%3E%3Cpath d=%22M300 300 L350 180 L400 300%22 fill=%22%235D4037%22/%3E%3Cpath d=%22M500 300 L550 220 L600 300%22 fill=%22%235D4037%22/%3E%3Ctext x=%22400%22 y=%22350%22 font-size=%2224%22 fill=%22white%22 text-anchor=%22middle%22 font-weight=%22bold%22%3ELandscape Scene%3C/text%3E%3C/svg%3E',
+    },
+    {
+      id: 'image-portrait',
+      name: 'Portrait.jpg',
+      type: 'image' as const,
+      content: 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 600%22%3E%3Cdefs%3E%3ClinearGradient id=%22bg%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%22100%25%22%3E%3Cstop offset=%220%25%22 style=%22stop-color:%23f5f5f5%22/%3E%3Cstop offset=%22100%25%22 style=%22stop-color:%23e0e0e0%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%22400%22 height=%22600%22 fill=%22url(%23bg)%22/%3E%3Crect x=%2250%22 y=%2250%22 width=%22300%22 height=%22400%22 rx=%2210%22 fill=%22white%22 stroke=%22%23ccc%22 stroke-width=%222%22/%3E%3Ccircle cx=%22200%22 cy=%22150%22 r=%2250%22 fill=%22%23667eea%22/%3E%3Crect x=%22100%22 y=%22220%22 width=%22200%22 height=%2260%22 rx=%225%22 fill=%22%23f5f5f5%22/%3E%3Crect x=%22100%22 y=%22300%22 width=%22200%22 height=%2240%22 rx=%225%22 fill=%22%23f5f5f5%22/%3E%3Crect x=%22100%22 y=%22360%22 width=%22200%22 height=%2240%22 rx=%225%22 fill=%22%23f5f5f5%22/%3E%3Ctext x=%22200%22 y=%22500%22 font-size=%2220%22 fill=%22%23333%22 text-anchor=%22middle%22 font-weight=%22bold%22%3EPortrait Card%3C/text%3E%3C/svg%3E',
+    },
+    {
+      id: 'image-diagram',
+      name: 'Architecture.png',
+      type: 'image' as const,
+      content: 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%23f8f9fa%22/%3E%3Crect x=%2220%22 y=%2220%22 width=%22160%22 height=%2260%22 rx=%228%22 fill=%22%23667eea%22/%3E%3Ctext x=%22100%22 y=%2255%22 font-size=%2214%22 fill=%22white%22 text-anchor=%22middle%22 font-weight=%22bold%22%3EFrontend%3C/text%3E%3Crect x=%22220%22 y=%2220%22 width=%22160%22 height=%2260%22 rx=%228%22 fill=%22%23764ba2%22/%3E%3Ctext x=%22300%22 y=%2255%22 font-size=%2214%22 fill=%22white%22 text-anchor=%22middle%22 font-weight=%22bold%22%3EBackend%3C/text%3E%3Crect x=%22420%22 y=%2220%22 width=%22160%22 height=%2260%22 rx=%228%22 fill=%22%2348bb78%22/%3E%3Ctext x=%22500%22 y=%2255%22 font-size=%2214%22 fill=%22white%22 text-anchor=%22middle%22 font-weight=%22bold%22%3EDatabase%3C/text%3E%3Cline x1=%22180%22 y1=%2250%22 x2=%22220%22 y2=%2250%22 stroke=%22%23333%22 stroke-width=%222%22/%3E%3Cline x1=%22380%22 y1=%2250%22 x2=%22420%22 y2=%2250%22 stroke=%22%23333%22 stroke-width=%222%22/%3E%3Crect x=%2220%22 y=%22120%22 width=%22560%22 height=%22260%22 rx=%228%22 fill=%22%23fff%22 stroke=%22%23ddd%22 stroke-width=%221%22/%3E%3Ctext x=%22300%22 y=%22150%22 font-size=%2216%22 fill=%22%23333%22 text-anchor=%22middle%22 font-weight=%22bold%22%3ESystem Architecture%3C/text%3E%3Crect x=%2250%22 y=%22180%22 width=%22100%22 height=%2240%22 rx=%224%22 fill=%22%23e3f2fd%22/%3E%3Ctext x=%22100%22 y=%22205%22 font-size=%2212%22 fill=%22%231976d2%22 text-anchor=%22middle%22%3EReact%3C/text%3E%3Crect x=%22170%22 y=%22180%22 width=%22100%22 height=%2240%22 rx=%224%22 fill=%22%23f3e5f5%22/%3E%3Ctext x=%22220%22 y=%22205%22 font-size=%2212%22 fill=%22%237b1fa2%22 text-anchor=%22middle%22%3ENode.js%3C/text%3E%3Crect x=%22290%22 y=%22180%22 width=%22100%22 height=%2240%22 rx=%224%22 fill=%22%23e8f5e9%22/%3E%3Ctext x=%22340%22 y=%22205%22 font-size=%2212%22 fill=%22%233880e9%22 text-anchor=%22middle%22%3EPostgreSQL%3C/text%3E%3Crect x=%22410%22 y=%22180%22 width=%22100%22 height=%2240%22 rx=%224%22 fill=%22%23fff3e0%22/%3E%3Ctext x=%22460%22 y=%22205%22 font-size=%2212%22 fill=%22%23e65100%22 text-anchor=%22middle%22%3ERedis%3C/text%3E%3C/svg%3E',
+    },
+  ] as Artifact[],
 };

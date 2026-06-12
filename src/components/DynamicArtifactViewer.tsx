@@ -132,6 +132,7 @@ export const DynamicArtifactViewer: React.FC<DynamicArtifactViewerProps> = ({
         return (
           <PdfViewer
             content={currentArtifact.content as ArrayBuffer}
+            url={currentArtifact.url}
             artifact={currentArtifact}
           />
         );
@@ -140,6 +141,7 @@ export const DynamicArtifactViewer: React.FC<DynamicArtifactViewerProps> = ({
         return (
           <WordViewer
             content={currentArtifact.content as ArrayBuffer}
+            url={currentArtifact.url}
             artifact={currentArtifact}
           />
         );
@@ -147,6 +149,7 @@ export const DynamicArtifactViewer: React.FC<DynamicArtifactViewerProps> = ({
         return (
           <ImageViewer
             content={currentArtifact.content as string}
+            url={currentArtifact.url}
             artifact={currentArtifact}
           />
         );

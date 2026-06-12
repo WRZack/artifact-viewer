@@ -4,7 +4,8 @@ export interface Artifact {
   id: string;
   name: string;
   type: ArtifactType;
-  content: string | ArrayBuffer; // content or URL for binary formats
+  content?: string | ArrayBuffer; // content or URL for binary formats
+  url?: string; // URL to fetch the file from
   language?: string; // For code files
   createdAt?: Date;
   updatedAt?: Date;
@@ -21,7 +22,8 @@ export interface ArtifactViewerProps {
 }
 
 export interface ViewerProps {
-  content: string | ArrayBuffer;
+  content?: string | ArrayBuffer;
+  url?: string;
   artifact: Artifact;
   onDownload?: () => void;
 }

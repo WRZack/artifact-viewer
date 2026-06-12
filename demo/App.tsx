@@ -3,7 +3,7 @@ import { DynamicArtifactViewer, Artifact } from '../src/index';
 import './App.css';
 import { mockArtifacts } from './mockData';
 
-type DemoType = 'basic' | 'agent-output' | 'documentation' | 'design-system' | 'report-generator' | 'code-review';
+type DemoType = 'basic' | 'agent-output' | 'documentation' | 'design-system' | 'report-generator' | 'code-review' | 'viewers-demo';
 
 const App = () => {
   const [currentDemo, setCurrentDemo] = useState<DemoType>('basic');
@@ -44,6 +44,13 @@ const App = () => {
           title: '👀 Code Review Tools',
           description:
             'Code review interface showing diffs, comments, suggestions, and multiple file formats in a single view.',
+        };
+      case 'viewers-demo':
+        return {
+          artifacts: mockArtifacts.viewersDemo,
+          title: '📄 Document & Image Viewers',
+          description:
+            'Demonstration of PDF, Word document, and image viewers with zoom controls and navigation. All viewers are fully local - no external dependencies.',
         };
       case 'basic':
       default:
@@ -104,6 +111,12 @@ const App = () => {
           >
             👀 Code Review
           </button>
+          <button
+            className={`nav-btn ${currentDemo === 'viewers-demo' ? 'active' : ''}`}
+            onClick={() => setCurrentDemo('viewers-demo')}
+          >
+            📄 Viewers
+          </button>
         </div>
       </nav>
 
@@ -131,6 +144,7 @@ const App = () => {
         {currentDemo === 'design-system' && <DesignSystemInfo />}
         {currentDemo === 'report-generator' && <ReportGeneratorInfo />}
         {currentDemo === 'code-review' && <CodeReviewInfo />}
+        {currentDemo === 'viewers-demo' && <ViewersDemoInfo />}
       </main>
 
       <footer className="demo-footer">
@@ -288,6 +302,48 @@ const CodeReviewInfo = () => (
       <div className="use-case-item">
         <h4>✅ Context</h4>
         <p>Test results, linting output, and CI/CD logs in JSON format</p>
+      </div>
+    </div>
+  </section>
+);
+
+const ViewersDemoInfo = () => (
+  <section className="demo-section">
+    <h3>📄 Document & Image Viewers</h3>
+    <p>
+      Fully local document and image viewing capabilities. No external services or CDN dependencies - all
+      rendering happens entirely in your browser for maximum privacy and reliability.
+    </p>
+    <div className="use-case-list">
+      <div className="use-case-item">
+        <h4>📑 PDF Viewer</h4>
+        <p>Canvas-based rendering with page navigation and zoom controls. Uses pdf.js for local rendering.</p>
+      </div>
+      <div className="use-case-item">
+        <h4>📋 Word Viewer</h4>
+        <p>Converts .docx files to HTML locally using mammoth.js. No Microsoft Office Online dependency.</p>
+      </div>
+      <div className="use-case-item">
+        <h4>🖼️ Image Viewer</h4>
+        <p>Supports various image formats with zoom and reset controls. Fully local rendering.</p>
+      </div>
+    </div>
+    <div className="info-grid" style={{ marginTop: '20px' }}>
+      <div className="info-card">
+        <h4>🔒 Privacy First</h4>
+        <p>No documents are sent to external servers</p>
+      </div>
+      <div className="info-card">
+        <h4>⚡ Fast Rendering</h4>
+        <p>All processing happens locally in browser</p>
+      </div>
+      <div className="info-card">
+        <h4>🌐 Offline Ready</h4>
+        <p>Works without internet connection</p>
+      </div>
+      <div className="info-card">
+        <h4>📦 Zero Dependencies</h4>
+        <p>No external API calls or CDN required</p>
       </div>
     </div>
   </section>

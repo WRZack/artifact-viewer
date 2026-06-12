@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { ViewerProps } from '../../types';
 import './ImageViewer.css';
 
-export const ImageViewer: React.FC<ViewerProps> = ({ content, artifact }) => {
+export const ImageViewer: React.FC<ViewerProps> = ({ content, url, artifact }) => {
   const [zoom, setZoom] = useState(1);
-  const imageSrc = typeof content === 'string' ? content : URL.createObjectURL(new Blob([content]));
+  const imageSrc = url || (typeof content === 'string' ? content : (content ? URL.createObjectURL(new Blob([content])) : ''));
 
   return (
     <div className="image-viewer">
