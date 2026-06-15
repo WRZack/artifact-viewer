@@ -27,7 +27,7 @@ export const ArtifactPreview: React.FC<ArtifactPreviewProps> = ({
 
     switch (artifact.type) {
       case 'html':
-        return <HtmlViewer content={artifact.content as string} artifact={artifact} />;
+        return <HtmlViewer content={artifact.content as string} url={artifact.url} artifact={artifact} />;
       case 'markdown':
         return <MarkdownViewer content={artifact.content as string} artifact={artifact} />;
       case 'pdf':
