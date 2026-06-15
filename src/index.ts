@@ -1,6 +1,4 @@
 // Main entry point for the artifact-viewer library
-export { ArtifactViewer } from './components/ArtifactViewer';
-export { ArtifactPreview } from './components/ArtifactPreview';
 export { DynamicArtifactViewer } from './components/DynamicArtifactViewer';
 export { CodeViewer } from './components/viewers/CodeViewer';
 export { HtmlViewer } from './components/viewers/HtmlViewer';

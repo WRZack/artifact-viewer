@@ -12,6 +12,7 @@ interface DynamicArtifactViewerProps {
   artifacts: Artifact[] | Artifact;
   defaultArtifactId?: string;
   onArtifactChange?: (artifact: Artifact) => void;
+  onClose?: () => void;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -20,6 +21,7 @@ export const DynamicArtifactViewer: React.FC<DynamicArtifactViewerProps> = ({
   artifacts,
   defaultArtifactId,
   onArtifactChange,
+  onClose,
   className = '',
   style = {},
 }) => {
@@ -236,6 +238,15 @@ export const DynamicArtifactViewer: React.FC<DynamicArtifactViewerProps> = ({
           >
             ⬇️ Download
           </button>
+          {onClose && (
+            <button
+              className="toolbar-btn close-btn"
+              onClick={onClose}
+              title="Close"
+            >
+              ✕
+            </button>
+          )}
         </div>
       </div>
 
