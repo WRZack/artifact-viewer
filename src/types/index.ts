@@ -25,5 +25,6 @@ export interface ViewerProps {
   content?: string | ArrayBuffer;
   url?: string;
   artifact: Artifact;
+  showSource?: boolean;
   onDownload?: () => void;
 }

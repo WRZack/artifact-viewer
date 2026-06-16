@@ -1,8 +1,67 @@
-.markdown-viewer {
+.markdown-viewer-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Toolbar */
+.markdown-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.markdown-toolbar-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.markdown-toolbar-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.markdown-toolbar-btn {
+  padding: 5px 10px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.markdown-toolbar-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.markdown-toolbar-btn.active {
+  background: #e0e7ff;
+  border-color: #818cf8;
+  color: #4f46e5;
+}
+
+/* Rendered view */
+.markdown-rendered {
   padding: 20px;
   font-size: 16px;
   line-height: 1.6;
   color: #24292e;
+  overflow: auto;
+  flex: 1;
 }
 
 .markdown-body {
@@ -138,4 +197,31 @@
   max-width: 100%;
   height: auto;
   border-radius: 6px;
+}
+
+/* Source view */
+.markdown-source-view {
+  flex: 1;
+  overflow: auto;
+  background: #1f2937;
+  border-radius: 0;
+}
+
+.markdown-source-content {
+  margin: 0;
+  padding: 16px;
+  background: #1f2937;
+  color: #e5e7eb;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.markdown-source-content code {
+  font-family: inherit;
+  background: none;
+  padding: 0;
+  color: inherit;
 }

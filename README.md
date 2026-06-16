@@ -38,6 +38,7 @@
 | 📱 **响应式设计** | 完美适配桌面和移动设备 |
 | 🔒 **安全沙箱** | HTML 内容在沙箱 iframe 中渲染 |
 | 🔒 **本地渲染** | PDF/Word 全部本地渲染，无需外部服务 |
+| 📄 **Markdown 原文切换** | 查看原文/渲染预览一键切换，支持复制原文 |
 
 ---
 
@@ -237,6 +238,8 @@ const htmlArtifact: Artifact = {
 - 支持换行（`breaks: true`）
 - 支持表格、任务��表、删除线等 GFM 扩展语法
 - 渲染结果以 `dangerouslySetInnerHTML` 注入
+- **查看原文 / 渲染预览切换**：内置工具栏，一键切换渲染视图与原始 Markdown 源码
+- **复制原文**：一键复制原始 Markdown 内容到剪贴板
 
 **使用示例：**
 
@@ -484,7 +487,7 @@ const jsonArtifact2: Artifact = {
 
 | 按钮 | 图标 | 适用类型 | 说明 |
 |------|------|----------|------|
-| Source / Preview | 📄 / 🎨 | 仅 `code` | 在源码和预览模式间切换 |
+| Source / Preview | 📄 / 🎨 | `code` 和 `markdown` | 在源码/原文和预览模式间切换 |
 | Fullscreen / Exit Fullscreen | 🖥️ / ⛔ | 所有类型 | 全屏模式开关 |
 | Download | ⬇️ | 所有类型 | 下载当前制品 |
 

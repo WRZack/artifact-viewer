@@ -105,7 +105,16 @@ export const DynamicArtifactViewer: React.FC<DynamicArtifactViewerProps> = ({
   };
 
   const renderViewer = () => {
-    if (showSource && currentArtifact.type === 'code') {
+    if (showSource && (currentArtifact.type === 'code' || currentArtifact.type === 'markdown')) {
+      if (currentArtifact.type === 'markdown') {
+        return (
+          <MarkdownViewer
+            content={currentArtifact.content as string}
+            artifact={currentArtifact}
+            showSource={true}
+          />
+        );
+      }
       return (
         <CodeViewer
           content={currentArtifact.content as string}
@@ -128,6 +137,7 @@ export const DynamicArtifactViewer: React.FC<DynamicArtifactViewerProps> = ({
           <MarkdownViewer
             content={currentArtifact.content as string}
             artifact={currentArtifact}
+            showSource={showSource}
           />
         );
       case 'pdf':
@@ -215,13 +225,13 @@ export const DynamicArtifactViewer: React.FC<DynamicArtifactViewerProps> = ({
           </span>
         </div>
         <div className="viewer-toolbar">
-          {currentArtifact.type === 'code' && (
+          {(currentArtifact.type === 'code' || currentArtifact.type === 'markdown') && (
             <button
               className="toolbar-btn"
               onClick={() => setShowSource(!showSource)}
-              title="Toggle source view"
+              title={currentArtifact.type === 'markdown' ? '切换原文 / 渲染预览' : 'Toggle source view'}
             >
-              {showSource ? '🎨 Preview' : '📄 Source'}
+              {showSource ? (currentArtifact.type === 'markdown' ? '🎨 渲染预览' : '🎨 Preview') : '📄 原文'}
             </button>
           )}
           <button
