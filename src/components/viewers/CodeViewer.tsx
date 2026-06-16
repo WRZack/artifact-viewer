@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { ViewerProps } from '../../types';
+import React, { useMemo } from 'react';
+import type { ViewerProps } from '../../types';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
 import './CodeViewer.css';
@@ -16,12 +16,20 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
   const codeContent = typeof content === 'string' ? content : '';
   const detectedLanguage = language || detectLanguage(artifact.name, codeContent);
 
-  useEffect(() => {
-    const codeElements = document.querySelectorAll('pre code');
-    codeElements.forEach((element) => {
-      hljs.highlightElement(element as HTMLElement);
-    });
-  }, [codeContent]);
+  // Use hljs.highlight() to produce HTML string — no DOM side effects
+  const highlightedHtml = useMemo(() => {
+    try {
+      const result = hljs.highlight(codeContent, { language: detectedLanguage });
+      return result.value;
+    } catch {
+      // Fallback: if language is not registered, auto-detect
+      try {
+        return hljs.highlightAuto(codeContent).value;
+      } catch {
+        return codeContent;
+      }
+    }
+  }, [codeContent, detectedLanguage]);
 
   const lines = codeContent.split('\n');
   const maxLineNumber = lines.length.toString().length;
@@ -41,7 +49,10 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
         </button>
       </div>
       <pre className="code-container">
-        <code className={`language-${detectedLanguage}`}>{codeContent}</code>
+        <code
+          className={`hljs language-${detectedLanguage}`}
+          dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+        />
       </pre>
     </div>
   );
