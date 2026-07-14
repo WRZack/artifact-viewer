@@ -27,4 +27,7 @@ export interface ViewerProps {
   artifact: Artifact;
   showSource?: boolean;
   onDownload?: () => void;
+  showToolbar?: boolean;
+  toolbarActions?: React.ReactNode;
+  viewMode?: 'rendered' | 'source';
 }

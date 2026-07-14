@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import mammoth from 'mammoth';
-import { ViewerProps } from '../../types';
+import type { ViewerProps } from '../../types';
+import { loadBinaryArtifact } from '../../utils/loadBinaryArtifact';
 import './WordViewer.css';
 
 export const WordViewer: React.FC<ViewerProps> = ({ content, url, artifact }) => {
@@ -32,9 +33,7 @@ export const WordViewer: React.FC<ViewerProps> = ({ content, url, artifact }) =>
             }
             arrayBuffer = bytes.buffer;
           } else {
-            // Fetch from URL
-            const response = await fetch(source);
-            arrayBuffer = await response.arrayBuffer();
+            arrayBuffer = await loadBinaryArtifact(source);
           }
         } else {
           arrayBuffer = source;
@@ -47,7 +46,7 @@ export const WordViewer: React.FC<ViewerProps> = ({ content, url, artifact }) =>
             "p[style-name='Heading 3'] => h3:fresh",
           ]
         });
-        
+
         setHtmlContent(result.value);
         setLoading(false);
       } catch (err) {
@@ -84,7 +83,7 @@ export const WordViewer: React.FC<ViewerProps> = ({ content, url, artifact }) =>
         {loading ? (
           <div className="word-loading">Loading document...</div>
         ) : (
-          <div 
+          <div
             className="word-content"
             dangerouslySetInnerHTML={{ __html: htmlContent }}
           />

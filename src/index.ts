@@ -6,4 +6,6 @@ export { MarkdownViewer } from './components/viewers/MarkdownViewer';
 export { PdfViewer } from './components/viewers/PdfViewer';
 export { WordViewer } from './components/viewers/WordViewer';
 export { ImageViewer } from './components/viewers/ImageViewer';
-export type { ArtifactViewerProps, Artifact, ArtifactType } from './types';
+export { downloadArtifact, handleDownload } from './utils/artifactDownload';
+export { loadBinaryArtifact } from './utils/loadBinaryArtifact';
+export type { ArtifactViewerProps, Artifact, ArtifactType, ViewerProps } from './types';

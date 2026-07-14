@@ -31,9 +31,6 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({
     }
   }, [codeContent, detectedLanguage]);
 
-  const lines = codeContent.split('\n');
-  const maxLineNumber = lines.length.toString().length;
-
   return (
     <div className="code-viewer">
       <div className="code-header">

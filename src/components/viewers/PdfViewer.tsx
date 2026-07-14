@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
-import { ViewerProps } from '../../types';
+import type { ViewerProps } from '../../types';
+import { loadBinaryArtifact } from '../../utils/loadBinaryArtifact';
 import './PdfViewer.css';
+import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
-// Set up PDF.js worker using local copy
-pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url
-).toString();
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 export const PdfViewer: React.FC<ViewerProps> = ({ content, url }) => {
   const [numPages, setNumPages] = useState<number>(0);
@@ -23,7 +21,7 @@ export const PdfViewer: React.FC<ViewerProps> = ({ content, url }) => {
   const renderPage = useCallback(async (pageNum: number, renderScale: number) => {
     const pdf = pdfDocRef.current;
     const canvas = canvasRef.current;
-    
+
     if (!pdf || !canvas) return;
 
     try {
@@ -69,11 +67,7 @@ export const PdfViewer: React.FC<ViewerProps> = ({ content, url }) => {
             }
             pdfData = bytes;
           } else {
-            const response = await fetch(source);
-            if (!response.ok) {
-              throw new Error(`Failed to fetch PDF: ${response.status}`);
-            }
-            pdfData = await response.arrayBuffer();
+            pdfData = await loadBinaryArtifact(source);
           }
         } else {
           pdfData = source;

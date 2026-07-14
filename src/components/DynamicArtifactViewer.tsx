@@ -1,5 +1,6 @@
 import React from 'react';
 import { Artifact, ArtifactType } from '../types';
+import { downloadArtifact } from '../utils/artifactDownload';
 import { CodeViewer } from './viewers/CodeViewer';
 import { HtmlViewer } from './viewers/HtmlViewer';
 import { MarkdownViewer } from './viewers/MarkdownViewer';
@@ -50,94 +51,27 @@ export const DynamicArtifactViewer: React.FC<DynamicArtifactViewerProps> = ({
     downloadArtifact(currentArtifact);
   };
 
-  const downloadArtifact = (artifact: Artifact) => {
-    try {
-      let data: BlobPart;
-      let mimeType = 'text/plain';
-      let extension = '.txt';
-
-      switch (artifact.type) {
-        case 'html':
-          data = artifact.content as string;
-          mimeType = 'text/html';
-          extension = '.html';
-          break;
-        case 'markdown':
-          data = artifact.content as string;
-          mimeType = 'text/markdown';
-          extension = '.md';
-          break;
-        case 'json':
-          data =
-            typeof artifact.content === 'string'
-              ? artifact.content
-              : JSON.stringify(artifact.content, null, 2);
-          mimeType = 'application/json';
-          extension = '.json';
-          break;
-        case 'pdf':
-          data = artifact.content as ArrayBuffer;
-          mimeType = 'application/pdf';
-          extension = '.pdf';
-          break;
-        case 'docx':
-        case 'word':
-          data = artifact.content as ArrayBuffer;
-          mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-          extension = '.docx';
-          break;
-        default:
-          data = artifact.content as string;
-      }
-
-      const blob = new Blob([data], { type: mimeType });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${artifact.name}${extension}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Download failed:', error);
-    }
-  };
-
   const renderViewer = () => {
-    if (showSource && (currentArtifact.type === 'code' || currentArtifact.type === 'markdown')) {
-      if (currentArtifact.type === 'markdown') {
-        return (
-          <MarkdownViewer
-            content={currentArtifact.content as string}
-            artifact={currentArtifact}
-            showSource={true}
-          />
-        );
-      }
-      return (
-        <CodeViewer
-          content={currentArtifact.content as string}
-          artifact={currentArtifact}
-          language={currentArtifact.language}
-        />
-      );
-    }
+    const viewMode = showSource ? 'source' : 'rendered';
 
     switch (currentArtifact.type) {
       case 'html':
         return (
           <HtmlViewer
             content={currentArtifact.content as string}
+            url={currentArtifact.url}
             artifact={currentArtifact}
+            viewMode={viewMode}
           />
         );
       case 'markdown':
         return (
           <MarkdownViewer
             content={currentArtifact.content as string}
+            url={currentArtifact.url}
             artifact={currentArtifact}
             showSource={showSource}
+            viewMode={viewMode}
           />
         );
       case 'pdf':
@@ -225,13 +159,13 @@ export const DynamicArtifactViewer: React.FC<DynamicArtifactViewerProps> = ({
           </span>
         </div>
         <div className="viewer-toolbar">
-          {(currentArtifact.type === 'code' || currentArtifact.type === 'markdown') && (
+          {(currentArtifact.type === 'code' || currentArtifact.type === 'markdown' || currentArtifact.type === 'html') && (
             <button
               className="toolbar-btn"
               onClick={() => setShowSource(!showSource)}
-              title={currentArtifact.type === 'markdown' ? '切换原文 / 渲染预览' : 'Toggle source view'}
+              title={showSource ? '切换渲染预览' : '查看原文'}
             >
-              {showSource ? (currentArtifact.type === 'markdown' ? '🎨 渲染预览' : '🎨 Preview') : '📄 原文'}
+              {showSource ? '🎨 渲染预览' : '📄 原文'}
             </button>
           )}
           <button
